@@ -1,5 +1,5 @@
 package it.epicode.buildweekfinale.enums;
 
-public enum tipoCliente {
+public enum TipoCliente {
     SPA, SAS, SRL, PA
 }

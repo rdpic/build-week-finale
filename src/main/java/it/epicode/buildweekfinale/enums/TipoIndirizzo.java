@@ -1,5 +1,5 @@
 package it.epicode.buildweekfinale.enums;
 
-public enum tipoIndirizzo {
+public enum TipoIndirizzo {
     SEDE_LEGALE, SEDE_OPERATIVA
 }
