@@ -21,8 +21,7 @@ public class UtenteService {
     }
 
     public Optional<Utente> getUtenteByUsername(String username) {
-        return utenteRepository.findByUsername(username);
-    }
+        return utenteRepository.findByUsername(username);}
 
     public Optional<Utente> getUtenteById(Integer id) {
         return utenteRepository.findById(id);
@@ -38,7 +37,7 @@ public class UtenteService {
             utente.setPassword(utenteDto.getPassword());
             utenteRepository.save(utente);
 
-            return "Utente con ID" + utente.getId() + "creato con successo.";
+            return "Utente con ID " + utente.getId() + " creato con successo.";
         } else {
             throw new BadRequestException("Lo username è già stato preso.");
         }
