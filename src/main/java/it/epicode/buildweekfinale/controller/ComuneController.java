@@ -1,6 +1,6 @@
 package it.epicode.buildweekfinale.controller;
 
-import it.epicode.buildweekfinale.service.ProvinciaService;
+import it.epicode.buildweekfinale.service.ComuneService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,18 +10,18 @@ import org.springframework.web.multipart.MultipartFile;
 
 @SuppressWarnings("all")
 @RestController
-@RequestMapping("/importa-province")
-public class ProvinciaController {
+@RequestMapping("/importa-comuni")
+public class ComuneController {
 
     @Autowired
-    private ProvinciaService provinciaService;
+    private ComuneService comuneService;
 
-    public ResponseEntity<String> importaProvince(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<String> importaComuni(@RequestParam("file") MultipartFile file) {
         try {
-            provinciaService.importaProvince(file);
-            return ResponseEntity.ok("Province importate con successo");
+            comuneService.importaComuni(file);
+            return ResponseEntity.ok("Comuni importati con successo");
         } catch (Exception e) {
-            return ResponseEntity.status(500).body("Errore durante l'importazione delle province.");
+            return ResponseEntity.status(500).body("Errore durante l'importazione dei comuni.");
         }
     }
 

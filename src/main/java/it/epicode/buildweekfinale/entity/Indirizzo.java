@@ -4,6 +4,7 @@ import it.epicode.buildweekfinale.enums.TipoIndirizzo;
 import jakarta.persistence.*;
 import lombok.Data;
 
+@SuppressWarnings("all")
 @Entity
 @Data
 @Table(name = "indirizzi")

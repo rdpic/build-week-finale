@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.util.List;
 
+@SuppressWarnings("all")
 @Data
 @Entity
 @Table(name = "province")

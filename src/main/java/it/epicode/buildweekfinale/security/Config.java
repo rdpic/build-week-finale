@@ -11,6 +11,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -31,10 +32,13 @@ public class Config implements WebMvcConfigurer {
         httpSecurity.cors(Customizer.withDefaults());
 
         httpSecurity.authorizeHttpRequests(http -> http.requestMatchers("/auth/**").permitAll());
-        httpSecurity.authorizeHttpRequests(http -> http.requestMatchers("/utenti/**").permitAll());
-        httpSecurity.authorizeHttpRequests(http -> http.requestMatchers("/fatture/**").permitAll());
-        httpSecurity.authorizeHttpRequests(http -> http.requestMatchers("/clienti/**").permitAll());
-        httpSecurity.authorizeHttpRequests(http -> http.requestMatchers("/indirizzi/**").permitAll());
+        httpSecurity.authorizeHttpRequests(http -> http.requestMatchers("/utenti/**").hasAuthority("ADMIN"));
+        httpSecurity.authorizeHttpRequests(http -> http.requestMatchers("/fatture/**").hasAnyAuthority("ADMIN", "USER"));
+        httpSecurity.authorizeHttpRequests(http -> http.requestMatchers("/clienti/**").hasAnyAuthority("ADMIN", "USER"));
+        httpSecurity.authorizeHttpRequests(http -> http.requestMatchers("/indirizzi/**").hasAnyAuthority("ADMIN", "USER"));
+        httpSecurity.authorizeHttpRequests(http -> http.anyRequest().authenticated());
+
+        httpSecurity.addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return httpSecurity.build();
     }
@@ -64,6 +68,11 @@ public class Config implements WebMvcConfigurer {
         source.registerCorsConfiguration("/**", corsConfiguration);
 
         return source;
+    }
+
+    @Bean
+    public JwtFilter jwtFilter() {
+        return new JwtFilter();
     }
 
 }
