@@ -17,7 +17,6 @@ public class Indirizzo {
     private String civico;
     private String localita;
     private String cap;
-    private String comune;
 
     @Enumerated(EnumType.STRING)
     private TipoIndirizzo tipoIndirizzo;
@@ -25,5 +24,9 @@ public class Indirizzo {
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
+
+    @ManyToOne
+    @JoinColumn(name = "comune_id")
+    private Comune comune;
 
 }

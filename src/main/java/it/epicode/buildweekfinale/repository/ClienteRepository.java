@@ -27,6 +27,9 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
     /*@Query("SELECT c FROM Cliente c JOIN FETCH c.indirizzi i WHERE i.tipoIndirizzo = 'SEDE_LEGALE' ORDER BY i.comune.provincia.nome ASC")
     List<Cliente> elencaClientiPerProvinciaSedeLegale();*/
 
+    @Query("SELECT c FROM Cliente c JOIN c.indirizzi i JOIN i.comune com JOIN com.provincia p WHERE i.tipoIndirizzo = 'SEDE_LEGALE' ORDER BY p.nome ASC")
+    List<Cliente> elencaClientiPerProvinciaSedeLegale();
+
 
     @Query("SELECT c FROM Cliente c WHERE c.fatturatoAnnuale > :minRevenue AND c.fatturatoAnnuale < :maxRevenue")
     List<Cliente> findByFatturatoAnnuo(@Param("minRevenue") BigDecimal minRevenue, @Param("maxRevenue") BigDecimal maxRevenue);

@@ -38,7 +38,6 @@ public class Config implements WebMvcConfigurer {
         httpSecurity.authorizeHttpRequests(http -> http.requestMatchers("/clienti/**").hasAnyAuthority("ADMIN", "USER"));
         httpSecurity.authorizeHttpRequests(http -> http.requestMatchers("/indirizzi/**").hasAnyAuthority("ADMIN", "USER"));
         httpSecurity.authorizeHttpRequests(http -> http.anyRequest().authenticated());
-
         httpSecurity.addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return httpSecurity.build();
