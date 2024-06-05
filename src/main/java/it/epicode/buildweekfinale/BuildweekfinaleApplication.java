@@ -41,7 +41,7 @@ public class BuildweekfinaleApplication implements CommandLineRunner {
 		Utente admin = new Utente();
 		admin.setUsername("admin");
 		admin.setEmail("riccardodelpiccolo1@gmail.com");
-		admin.setPassword("admin");
+		admin.setPassword(passwordEncoder.encode("admin"));
 		admin.setNome("Riccardo");
 		admin.setCognome("DelPiccolo");
 		admin.setAvatar("admin_avatar.png");
@@ -51,7 +51,7 @@ public class BuildweekfinaleApplication implements CommandLineRunner {
 		Utente utente1 = new Utente();
 		utente1.setUsername("utente");
 		utente1.setEmail("utente1@gmail.com");
-		utente1.setPassword("password");
+		utente1.setPassword(passwordEncoder.encode("password"));
 		utente1.setNome("Franchino");
 		utente1.setCognome("ErCriminale");
 		utente1.setAvatar("utente1_avatar.png");
