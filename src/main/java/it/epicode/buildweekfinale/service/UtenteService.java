@@ -17,6 +17,7 @@ public class UtenteService {
     @Autowired
     private UtenteRepository utenteRepository;
 
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     public List<Utente> getAllUtenti() {
@@ -38,6 +39,7 @@ public class UtenteService {
             utente.setNome(utenteDto.getNome());
             utente.setCognome(utenteDto.getCognome());
             utente.setPassword(passwordEncoder.encode(utenteDto.getPassword()));
+            utente.setRuoloUtente(utenteDto.getRuoloUtente());
             utenteRepository.save(utente);
 
             return "Utente con ID " + utente.getId() + " creato con successo.";

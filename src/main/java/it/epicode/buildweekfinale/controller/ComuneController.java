@@ -3,6 +3,7 @@ package it.epicode.buildweekfinale.controller;
 import it.epicode.buildweekfinale.service.ComuneService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +17,7 @@ public class ComuneController {
     @Autowired
     private ComuneService comuneService;
 
+    @PostMapping
     public ResponseEntity<String> importaComuni(@RequestParam("file") MultipartFile file) {
         try {
             comuneService.importaComuni(file);

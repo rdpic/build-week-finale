@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.math.BigDecimal;
@@ -18,6 +19,7 @@ import java.time.LocalDate;
 
 @SuppressWarnings("all")
 @SpringBootApplication
+@ComponentScan(basePackages = "it.epicode.buildweekfinale")
 public class BuildweekfinaleApplication implements CommandLineRunner {
 
 	@Autowired
