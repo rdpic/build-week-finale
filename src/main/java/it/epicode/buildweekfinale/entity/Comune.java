@@ -3,6 +3,7 @@ package it.epicode.buildweekfinale.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+@SuppressWarnings("all")
 @Data
 @Entity
 @Table(name = "comuni")

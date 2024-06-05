@@ -19,12 +19,13 @@ public class ProvinciaService {
     @Autowired
     private ProvinciaRepository provinciaRepository;
 
+    private String csvFilePath = "province-italiane.csv";
+
     public void importaProvince(MultipartFile file) {
         try {
-            File tempFile = File.createTempFile("temp", ".csv");
-            file.transferTo(tempFile);
+            File csvFile = new File(csvFilePath);
 
-            List<String> lines = FileUtils.readLines(tempFile, StandardCharsets.UTF_8);
+            List<String> lines = FileUtils.readLines(csvFile, StandardCharsets.UTF_8);
             for (String line : lines) {
                 if (line.startsWith("Sigla;Provincia;Regione")) {
                     continue;
@@ -36,8 +37,6 @@ public class ProvinciaService {
                 provincia.setRegione(dati[2]);
                 provinciaRepository.save(provincia);
             }
-
-            FileUtils.forceDelete(tempFile);
         } catch (IOException e) {
             e.printStackTrace();
         }

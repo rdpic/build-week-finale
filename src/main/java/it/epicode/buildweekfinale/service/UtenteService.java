@@ -5,6 +5,7 @@ import it.epicode.buildweekfinale.entity.Utente;
 import it.epicode.buildweekfinale.exception.BadRequestException;
 import it.epicode.buildweekfinale.repository.UtenteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +16,8 @@ public class UtenteService {
 
     @Autowired
     private UtenteRepository utenteRepository;
+
+    private PasswordEncoder passwordEncoder;
 
     public List<Utente> getAllUtenti() {
         return utenteRepository.findAll();
@@ -34,7 +37,7 @@ public class UtenteService {
             utente.setEmail(utenteDto.getEmail());
             utente.setNome(utenteDto.getNome());
             utente.setCognome(utenteDto.getCognome());
-            utente.setPassword(utenteDto.getPassword());
+            utente.setPassword(passwordEncoder.encode(utenteDto.getPassword()));
             utenteRepository.save(utente);
 
             return "Utente con ID " + utente.getId() + " creato con successo.";
