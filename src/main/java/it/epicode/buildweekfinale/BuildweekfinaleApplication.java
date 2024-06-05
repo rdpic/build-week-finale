@@ -4,7 +4,9 @@ import it.epicode.buildweekfinale.entity.Cliente;
 import it.epicode.buildweekfinale.entity.Utente;
 import it.epicode.buildweekfinale.enums.RuoloUtente;
 import it.epicode.buildweekfinale.repository.ClienteRepository;
+import it.epicode.buildweekfinale.repository.ProvinciaRepository;
 import it.epicode.buildweekfinale.repository.UtenteRepository;
+import it.epicode.buildweekfinale.service.ProvinciaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -23,6 +25,9 @@ public class BuildweekfinaleApplication implements CommandLineRunner {
 
 	@Autowired
 	private ClienteRepository clienteRepository;
+
+	@Autowired
+	private ProvinciaService provinciaService;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;

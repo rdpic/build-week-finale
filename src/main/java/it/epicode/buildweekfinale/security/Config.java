@@ -31,7 +31,8 @@ public class Config implements WebMvcConfigurer {
         httpSecurity.sessionManagement(http -> http.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         httpSecurity.cors(Customizer.withDefaults());
 
-        httpSecurity.authorizeHttpRequests(http -> http.requestMatchers("/auth/**").permitAll());
+        httpSecurity.authorizeHttpRequests(http -> http.requestMatchers("/auth/login/**").permitAll());
+        httpSecurity.authorizeHttpRequests(http -> http.requestMatchers("/auth/signup/**").permitAll());
         httpSecurity.authorizeHttpRequests(http -> http.requestMatchers("/utenti/**").hasAuthority("ADMIN"));
         httpSecurity.authorizeHttpRequests(http -> http.requestMatchers("/fatture/**").hasAnyAuthority("ADMIN", "USER"));
         httpSecurity.authorizeHttpRequests(http -> http.requestMatchers("/clienti/**").hasAnyAuthority("ADMIN", "USER"));
