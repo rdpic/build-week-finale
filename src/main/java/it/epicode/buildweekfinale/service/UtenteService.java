@@ -1,5 +1,6 @@
 package it.epicode.buildweekfinale.service;
 
+import it.epicode.buildweekfinale.dto.SignupDto;
 import it.epicode.buildweekfinale.dto.UtenteDto;
 import it.epicode.buildweekfinale.entity.Utente;
 import it.epicode.buildweekfinale.exception.BadRequestException;
@@ -37,7 +38,7 @@ public class UtenteService {
         return utenteRepository.findById(id);
     }
 
-    public String saveUtente(UtenteDto utenteDto) {
+    public SignupDto saveUtente(UtenteDto utenteDto) {
         if (getUtenteByUsername(utenteDto.getUsername()).isEmpty()) {
             Utente utente = new Utente();
             utente.setUsername(utenteDto.getUsername());
@@ -49,7 +50,10 @@ public class UtenteService {
             utenteRepository.save(utente);
             sendMail(utente.getEmail());
 
-            return "Utente con ID " + utente.getId() + " creato con successo.";
+            SignupDto signupDto = new SignupDto();
+            signupDto.setUtente(utente);
+
+            return signupDto;
         } else {
             throw new BadRequestException("Lo username è già stato preso.");
         }
