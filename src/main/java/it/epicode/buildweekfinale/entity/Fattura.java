@@ -7,6 +7,7 @@ import lombok.Data;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+@SuppressWarnings("all")
 @Entity
 @Data
 @Table(name = "fatture")

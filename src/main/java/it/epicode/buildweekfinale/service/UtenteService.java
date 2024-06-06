@@ -5,6 +5,7 @@ import it.epicode.buildweekfinale.entity.Utente;
 import it.epicode.buildweekfinale.exception.BadRequestException;
 import it.epicode.buildweekfinale.repository.UtenteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,13 +17,15 @@ public class UtenteService {
     @Autowired
     private UtenteRepository utenteRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public List<Utente> getAllUtenti() {
         return utenteRepository.findAll();
     }
 
     public Optional<Utente> getUtenteByUsername(String username) {
-        return utenteRepository.findByUsername(username);
-    }
+        return utenteRepository.findByUsername(username);}
 
     public Optional<Utente> getUtenteById(Integer id) {
         return utenteRepository.findById(id);
@@ -35,10 +38,11 @@ public class UtenteService {
             utente.setEmail(utenteDto.getEmail());
             utente.setNome(utenteDto.getNome());
             utente.setCognome(utenteDto.getCognome());
-            utente.setPassword(utenteDto.getPassword());
+            utente.setPassword(passwordEncoder.encode(utenteDto.getPassword()));
+            utente.setRuoloUtente(utenteDto.getRuoloUtente());
             utenteRepository.save(utente);
 
-            return "Utente con ID" + utente.getId() + "creato con successo.";
+            return "Utente con ID " + utente.getId() + " creato con successo.";
         } else {
             throw new BadRequestException("Lo username è già stato preso.");
         }
