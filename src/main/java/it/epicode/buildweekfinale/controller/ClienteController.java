@@ -3,6 +3,7 @@ package it.epicode.buildweekfinale.controller;
 import it.epicode.buildweekfinale.entity.Cliente;
 import it.epicode.buildweekfinale.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,15 +31,17 @@ public class ClienteController {
     }
 
     @PostMapping
-    public Cliente createCliente(@RequestBody Cliente cliente) {
-        return clienteService.saveCliente(cliente);
+    public ResponseEntity<Cliente> createCliente(@RequestBody Cliente cliente) {
+        Cliente createdCliente = clienteService.saveCliente(cliente);
+        return new ResponseEntity<>(createdCliente, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Cliente> updateCliente(@PathVariable Integer id, @RequestBody Cliente dettagliCliente) {
-        Optional<Cliente> updatedCliente = clienteService.updateCliente(id, dettagliCliente);
-        if (updatedCliente.isPresent()) {
-            return ResponseEntity.ok().body(updatedCliente.get());
+        Optional<Cliente> clienteToUpdate = clienteService.updateCliente(id, dettagliCliente);
+
+        if (clienteToUpdate.isPresent()) {
+            return ResponseEntity.ok().body(clienteToUpdate.get());
         } else {
             return ResponseEntity.notFound().build();
         }

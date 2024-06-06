@@ -9,8 +9,11 @@ import org.springframework.data.jpa.repository.Query;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public interface FatturaRepository extends JpaRepository<Fattura, Integer> {
+
+    Optional<Fattura> findByNumero(String numero);
 
     @Query("SELECT f FROM Fattura f WHERE f.cliente = :cliente")
     List<Fattura> findByCliente(Cliente cliente);

@@ -20,7 +20,6 @@ public class Fattura {
     private LocalDate data;
     private BigDecimal importo;
     private String numero;
-    private String stato;
 
     @Enumerated(EnumType.STRING)
     private StatoFattura statoFattura;
