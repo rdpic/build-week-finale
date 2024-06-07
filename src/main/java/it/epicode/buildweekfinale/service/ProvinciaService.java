@@ -26,8 +26,11 @@ public class ProvinciaService {
             File csvFile = new File(csvFilePath);
 
             List<String> lines = FileUtils.readLines(csvFile, StandardCharsets.UTF_8);
+
+            boolean primaRiga = true;
             for (String line : lines) {
-                if (line.startsWith("Sigla;Provincia;Regione")) {
+                if (primaRiga) {
+                    primaRiga = false;
                     continue;
                 }
                 String[] dati = line.split(";");

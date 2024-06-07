@@ -23,8 +23,10 @@ public class ComuneService {
             file.transferTo(tempFile);
 
             List<String> lines = FileUtils.readLines(tempFile, "UTF-8");
+            boolean primaRiga = true;
             for (String line : lines) {
-                if (line.startsWith("Codice Provincia (Storico)(1);Progressivo del Comune (2);Denominazione in italiano")) {
+                if (primaRiga) {
+                    primaRiga = false;
                     continue;
                 }
                 String[] dati = line.split(";");
