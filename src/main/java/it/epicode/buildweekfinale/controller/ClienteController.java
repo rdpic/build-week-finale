@@ -80,22 +80,22 @@ public class ClienteController {
         return clienteService.getClientiByProvincia();
     }
 
-    @GetMapping
+    @GetMapping("/by-fatturato-annuo")
     public List<Cliente> getClientiByFatturatoAnnuo(@RequestParam BigDecimal minRevenue, @RequestParam BigDecimal maxRevenue) {
         return clienteService.findClientiByFatturatoAnnuo(minRevenue, maxRevenue);
     }
 
-    @GetMapping
+    @GetMapping("/by-data-uc")
     public List<Cliente> getClientiByDataUC(@RequestParam LocalDate dataUC) {
         return clienteService.findClientiByDataUC(dataUC);
     }
 
-    @GetMapping
+    @GetMapping("/by-data-ins")
     public List<Cliente> getClientiByDataIns(@RequestParam LocalDate dataIns) {
         return clienteService.findClientiByDataIns(dataIns);
     }
 
-    @GetMapping
+    @GetMapping("/by-nome-parziale")
     public List<Cliente> getClientiByNomeParziale(@RequestParam String nomeParziale) {
         return clienteService.findClientiByNomeParziale(nomeParziale);
     }

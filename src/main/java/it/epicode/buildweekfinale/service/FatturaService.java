@@ -3,6 +3,7 @@ package it.epicode.buildweekfinale.service;
 import it.epicode.buildweekfinale.dto.FatturaDto;
 import it.epicode.buildweekfinale.entity.Cliente;
 import it.epicode.buildweekfinale.entity.Fattura;
+import it.epicode.buildweekfinale.enums.StatoFattura;
 import it.epicode.buildweekfinale.exception.BadRequestException;
 import it.epicode.buildweekfinale.exception.NotFoundException;
 import it.epicode.buildweekfinale.repository.ClienteRepository;
@@ -10,8 +11,13 @@ import it.epicode.buildweekfinale.repository.FatturaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class FatturaService {
@@ -86,13 +92,54 @@ public class FatturaService {
         fatturaRepository.deleteById(id);
     }
 
-    public List<Fattura> findByCliente (String nomeCliente){
+    public List<Fattura> findByCliente(String nomeCliente) {
 
         Optional<Cliente> clienteOpt = clienteRepository.findAll().stream().filter(c -> c.getRagioneSociale() == nomeCliente).findFirst();
 
-        if (clienteOpt.isPresent()){
+        if (clienteOpt.isPresent()) {
             Cliente cliente = clienteOpt.get();
-        return fatturaRepository.findByCliente(cliente);} else throw new NotFoundException("Cliente non trovato.");
+            return fatturaRepository.findByCliente(cliente);
+        } else throw new NotFoundException("Cliente non trovato.");
     }
 
+    public List<Fattura> findByStato(String stato) {
+
+        try {
+            StatoFattura statoFattura = StatoFattura.valueOf(stato);
+            return fatturaRepository.findByStatoFattura(statoFattura);
+        } catch (Exception e) {
+            e.getMessage();
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+
+
+    }
+
+    public List<Fattura> findByData(String data) {
+        try {
+            LocalDate localDate = LocalDate.parse(data);
+            return fatturaRepository.findByData(localDate);
+        } catch (Exception e) {
+            e.getMessage();
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+
+    }
+
+    public List<Fattura> findByAnno(Integer anno) {
+        try {
+            return fatturaRepository.findByAnno(anno);
+        } catch (Exception e) {
+            e.getMessage();
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+
+    }
+
+    public List<Fattura> findByRangeImporto(BigDecimal minImporto, BigDecimal maxImporto) {
+        return fatturaRepository.findByRangeImporto(minImporto, maxImporto);
+    }
 }
