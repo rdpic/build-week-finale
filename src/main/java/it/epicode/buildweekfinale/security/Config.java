@@ -34,10 +34,13 @@ public class Config implements WebMvcConfigurer {
         httpSecurity.sessionManagement(http -> http.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         httpSecurity.cors(Customizer.withDefaults());
 
-        httpSecurity.authorizeHttpRequests(http -> http.requestMatchers("/auth/login", "/auth/signup", "/importa-province", "/importa-comuni").permitAll());
+        httpSecurity.authorizeHttpRequests(http -> http.requestMatchers("/auth/login", "/auth/signup").permitAll());
         httpSecurity.authorizeHttpRequests(http -> http.requestMatchers("/utenti/**").hasAuthority("ADMIN"));
         httpSecurity.authorizeHttpRequests(http -> http.requestMatchers("/fatture/**").hasAnyAuthority("ADMIN", "USER"));
         httpSecurity.authorizeHttpRequests(http -> http.requestMatchers("/clienti/**").hasAnyAuthority("ADMIN", "USER"));
+        httpSecurity.authorizeHttpRequests(http -> http.requestMatchers("/indirizzi/**").hasAnyAuthority("ADMIN", "USER"));
+        httpSecurity.authorizeHttpRequests(http -> http.requestMatchers("/importa-province/**").hasAnyAuthority("ADMIN", "USER"));
+        httpSecurity.authorizeHttpRequests(http -> http.requestMatchers("/importa-comuni/**").hasAnyAuthority("ADMIN", "USER"));
         httpSecurity.authorizeHttpRequests(http -> http.anyRequest().authenticated());
         httpSecurity.addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
 
