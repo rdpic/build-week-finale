@@ -55,16 +55,16 @@ public class FatturaTest {
     void testFindByStatoFattura() {
 
         Fattura fattura1 = new Fattura();
-        fattura1.setStatoFattura(StatoFattura.CONSEGNATA);
+        fattura1.setStatoFattura(StatoFattura.INVIATA);
         Fattura fattura2 = new Fattura();
-        fattura2.setStatoFattura(StatoFattura.IN_LAVORAZIONE);
+        fattura2.setStatoFattura(StatoFattura.SCARTATA);
 
         fatturaRepository.saveAll(List.of(fattura1, fattura2));
 
-        List<Fattura> result = fatturaRepository.findByStatoFattura(StatoFattura.CONSEGNATA);
+        List<Fattura> result = fatturaRepository.findByStatoFattura(StatoFattura.INVIATA);
 
         assertEquals(1, result.size());
-        assertEquals(StatoFattura.CONSEGNATA, result.get(0).getStatoFattura());
+        assertEquals(StatoFattura.INVIATA, result.get(0).getStatoFattura());
     }
 
     @Test

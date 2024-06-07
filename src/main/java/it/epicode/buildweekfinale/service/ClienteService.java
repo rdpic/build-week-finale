@@ -8,6 +8,8 @@ import it.epicode.buildweekfinale.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -83,6 +85,41 @@ public class ClienteService {
                 .collect(Collectors.toList());
     } */
 
+    public List<Cliente> getClientiByName() {
+        return clienteRepository.elencaClientiPerNome();
+    }
+
+    public List<Cliente> getClientiByFatturato() {
+        return clienteRepository.elencaClientiPerFatturato();
+    }
+
+    public List<Cliente> getClientiByData() {
+        return clienteRepository.elencaClientiPerDataInserimento();
+    }
+
+    public List<Cliente> getClientiByDataUC() {
+        return clienteRepository.elencaClientiPerDataUltimoContatto();
+    }
+
+    public List<Cliente> getClientiByProvincia() {
+        return clienteRepository.elencaClientiPerProvinciaSedeLegale();
+    }
+
+    public List<Cliente> findClientiByFatturatoAnnuo(BigDecimal minRevenue, BigDecimal maxRevenue){
+        return clienteRepository.findByFatturatoAnnuo(minRevenue, maxRevenue);
+    }
+
+    public List<Cliente> findClientiByDataUC (LocalDate dataUC) {
+        return clienteRepository.findByDataUltimoContatto(dataUC);
+    }
+
+    public List<Cliente> findClientiByDataIns (LocalDate dataIns) {
+        return clienteRepository.findByDataUltimoContatto(dataIns);
+    }
+
+    public List<Cliente> findClientiByNomeParziale (String nomeParziale) {
+        return clienteRepository.findByNomeParziale(nomeParziale);
+    }
 
 
 }

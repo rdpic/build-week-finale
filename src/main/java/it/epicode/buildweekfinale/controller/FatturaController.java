@@ -49,4 +49,10 @@ public class FatturaController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/cliente/{nomeCliente}")
+    public List<Fattura> getFattureByCliente(@PathVariable String nomeCliente)  {
+        return fatturaService.findByCliente(nomeCliente);
+    }
+
+
 }

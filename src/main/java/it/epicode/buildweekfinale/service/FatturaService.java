@@ -4,6 +4,7 @@ import it.epicode.buildweekfinale.dto.FatturaDto;
 import it.epicode.buildweekfinale.entity.Cliente;
 import it.epicode.buildweekfinale.entity.Fattura;
 import it.epicode.buildweekfinale.exception.BadRequestException;
+import it.epicode.buildweekfinale.exception.NotFoundException;
 import it.epicode.buildweekfinale.repository.ClienteRepository;
 import it.epicode.buildweekfinale.repository.FatturaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,6 +84,15 @@ public class FatturaService {
 
     public void deleteFattura(Integer id) {
         fatturaRepository.deleteById(id);
+    }
+
+    public List<Fattura> findByCliente (String nomeCliente){
+
+        Optional<Cliente> clienteOpt = clienteRepository.findAll().stream().filter(c -> c.getRagioneSociale() == nomeCliente).findFirst();
+
+        if (clienteOpt.isPresent()){
+            Cliente cliente = clienteOpt.get();
+        return fatturaRepository.findByCliente(cliente);} else throw new NotFoundException("Cliente non trovato.");
     }
 
 }

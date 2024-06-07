@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,6 +53,51 @@ public class ClienteController {
     public ResponseEntity<Void> deleteCliente(@PathVariable Integer id) {
         clienteService.deleteCliente(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/clientipernome")
+    public List<Cliente> getClientiByName() {
+        return clienteService.getClientiByName();
+    }
+
+    @GetMapping("/clientiperfatturato")
+    public List<Cliente> getClientiByFatturato() {
+        return clienteService.getClientiByFatturato();
+    }
+
+    @GetMapping("/clientiperdata")
+    public List<Cliente> getClientiByData() {
+        return clienteService.getClientiByData();
+    }
+
+    @GetMapping("/clientiperdatauc")
+    public List<Cliente> getClientiByDataUC() {
+        return clienteService.getClientiByDataUC();
+    }
+
+    @GetMapping("/clientiperprovincia")
+    public List<Cliente> getClientiByProvincia() {
+        return clienteService.getClientiByProvincia();
+    }
+
+    @GetMapping
+    public List<Cliente> getClientiByFatturatoAnnuo(@RequestParam BigDecimal minRevenue, @RequestParam BigDecimal maxRevenue) {
+        return clienteService.findClientiByFatturatoAnnuo(minRevenue, maxRevenue);
+    }
+
+    @GetMapping
+    public List<Cliente> getClientiByDataUC(@RequestParam LocalDate dataUC) {
+        return clienteService.findClientiByDataUC(dataUC);
+    }
+
+    @GetMapping
+    public List<Cliente> getClientiByDataIns(@RequestParam LocalDate dataIns) {
+        return clienteService.findClientiByDataIns(dataIns);
+    }
+
+    @GetMapping
+    public List<Cliente> getClientiByNomeParziale(@RequestParam String nomeParziale) {
+        return clienteService.findClientiByNomeParziale(nomeParziale);
     }
 
 }
