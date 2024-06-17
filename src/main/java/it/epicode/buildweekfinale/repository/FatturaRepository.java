@@ -9,8 +9,11 @@ import org.springframework.data.jpa.repository.Query;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public interface FatturaRepository extends JpaRepository<Fattura, Integer> {
+
+    Optional<Fattura> findByNumero(String numero);
 
     @Query("SELECT f FROM Fattura f WHERE f.cliente = :cliente")
     List<Fattura> findByCliente(Cliente cliente);
@@ -22,7 +25,7 @@ public interface FatturaRepository extends JpaRepository<Fattura, Integer> {
     List<Fattura> findByData(LocalDate data);
 
     @Query("SELECT f FROM Fattura f WHERE YEAR(f.data) = :anno")
-    List<Fattura> findByAnno(int anno);
+    List<Fattura> findByAnno(Integer anno);
 
     @Query("SELECT f FROM Fattura f WHERE f.importo BETWEEN :minImporto AND :maxImporto")
     List<Fattura> findByRangeImporto(BigDecimal minImporto, BigDecimal maxImporto);

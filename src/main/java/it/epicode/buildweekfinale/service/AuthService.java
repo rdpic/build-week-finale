@@ -1,5 +1,6 @@
 package it.epicode.buildweekfinale.service;
 
+import it.epicode.buildweekfinale.dto.AuthDataDto;
 import it.epicode.buildweekfinale.dto.UtenteLoginDto;
 import it.epicode.buildweekfinale.entity.Utente;
 import it.epicode.buildweekfinale.exception.NotFoundException;
@@ -23,13 +24,16 @@ public class AuthService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public String authenticateUtenteAndGenerateToken(UtenteLoginDto utenteLoginDto) {
+    public AuthDataDto authenticateUtenteAndGenerateToken(UtenteLoginDto utenteLoginDto) {
         Optional<Utente> utenteOptional = utenteService.getUtenteByUsername(utenteLoginDto.getUsername());
 
         if (utenteOptional.isPresent()) {
             Utente utente = utenteOptional.get();
             if (passwordEncoder.matches(utenteLoginDto.getPassword(), utente.getPassword())) {
-                return jwtTool.createToken(utente);
+                AuthDataDto authDataDto = new AuthDataDto();
+                authDataDto.setAccessToken(jwtTool.createToken(utente));
+                authDataDto.setUtente(utente);
+                return authDataDto;
             } else {
                 throw new UnauthorizedException("Errore in fase di login, ritentare.");
             }

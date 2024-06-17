@@ -1,5 +1,7 @@
 package it.epicode.buildweekfinale.controller;
 
+import it.epicode.buildweekfinale.dto.AuthDataDto;
+import it.epicode.buildweekfinale.dto.SignupDto;
 import it.epicode.buildweekfinale.dto.UtenteDto;
 import it.epicode.buildweekfinale.dto.UtenteLoginDto;
 import it.epicode.buildweekfinale.exception.BadRequestException;
@@ -23,7 +25,7 @@ public class AuthController {
     private UtenteService utenteService;
 
     @PostMapping("/auth/signup")
-    public String signup(@RequestBody @Validated UtenteDto utenteDto, BindingResult bindingResult) {
+    public SignupDto signup(@RequestBody @Validated UtenteDto utenteDto, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             throw new BadRequestException(bindingResult.getAllErrors().stream().map(objectError -> objectError.getDefaultMessage()).
@@ -34,7 +36,7 @@ public class AuthController {
     }
 
     @PostMapping("/auth/login")
-    public String login(@RequestBody @Validated UtenteLoginDto utenteLoginDTO, BindingResult bindingResult) {
+    public AuthDataDto login(@RequestBody @Validated UtenteLoginDto utenteLoginDTO, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             throw new BadRequestException(bindingResult.getAllErrors().stream().map(objectError -> objectError.getDefaultMessage()).

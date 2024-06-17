@@ -3,9 +3,12 @@ package it.epicode.buildweekfinale.controller;
 import it.epicode.buildweekfinale.entity.Cliente;
 import it.epicode.buildweekfinale.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,15 +33,17 @@ public class ClienteController {
     }
 
     @PostMapping
-    public Cliente createCliente(@RequestBody Cliente cliente) {
-        return clienteService.saveCliente(cliente);
+    public ResponseEntity<Cliente> createCliente(@RequestBody Cliente cliente) {
+        Cliente createdCliente = clienteService.saveCliente(cliente);
+        return new ResponseEntity<>(createdCliente, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Cliente> updateCliente(@PathVariable Integer id, @RequestBody Cliente dettagliCliente) {
-        Optional<Cliente> updatedCliente = clienteService.updateCliente(id, dettagliCliente);
-        if (updatedCliente.isPresent()) {
-            return ResponseEntity.ok().body(updatedCliente.get());
+        Optional<Cliente> clienteToUpdate = clienteService.updateCliente(id, dettagliCliente);
+
+        if (clienteToUpdate.isPresent()) {
+            return ResponseEntity.ok().body(clienteToUpdate.get());
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -48,6 +53,51 @@ public class ClienteController {
     public ResponseEntity<Void> deleteCliente(@PathVariable Integer id) {
         clienteService.deleteCliente(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/clientipernome")
+    public List<Cliente> getClientiByName() {
+        return clienteService.getClientiByName();
+    }
+
+    @GetMapping("/clientiperfatturato")
+    public List<Cliente> getClientiByFatturato() {
+        return clienteService.getClientiByFatturato();
+    }
+
+    @GetMapping("/clientiperdata")
+    public List<Cliente> getClientiByData() {
+        return clienteService.getClientiByData();
+    }
+
+    @GetMapping("/clientiperdatauc")
+    public List<Cliente> getClientiByDataUC() {
+        return clienteService.getClientiByDataUC();
+    }
+
+    @GetMapping("/clientiperprovincia")
+    public List<Cliente> getClientiByProvincia() {
+        return clienteService.getClientiByProvincia();
+    }
+
+    @GetMapping("/by-fatturato-annuo")
+    public List<Cliente> getClientiByFatturatoAnnuo(@RequestParam BigDecimal minRevenue, @RequestParam BigDecimal maxRevenue) {
+        return clienteService.findClientiByFatturatoAnnuo(minRevenue, maxRevenue);
+    }
+
+    @GetMapping("/by-data-uc")
+    public List<Cliente> getClientiByDataUC(@RequestParam LocalDate dataUC) {
+        return clienteService.findClientiByDataUC(dataUC);
+    }
+
+    @GetMapping("/by-data-ins")
+    public List<Cliente> getClientiByDataIns(@RequestParam LocalDate dataIns) {
+        return clienteService.findClientiByDataIns(dataIns);
+    }
+
+    @GetMapping("/by-nome-parziale")
+    public List<Cliente> getClientiByNomeParziale(@RequestParam String nomeParziale) {
+        return clienteService.findClientiByNomeParziale(nomeParziale);
     }
 
 }
